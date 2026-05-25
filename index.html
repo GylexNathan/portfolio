@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gylex Nathan - Développeur Backend & IA</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+  <style>
+    :root {
+      --bg: #090d16;
+      --bg-card: #111827;
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.15);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.2);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border: #1f2937;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* Gradients de fond */
+    .bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+    .bg-glow-2 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      bottom: 10%;
+      left: -100px;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(9, 13, 22, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content h2 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #fff, #9ca3af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #fff;
+      border: 1px solid var(--primary);
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+      background-color: transparent;
+      color: var(--primary);
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: var(--text);
+    }
+
+    /* Image de profil moderne */
+    .hero-image-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    .image-border-glow {
+      position: relative;
+      width: 320px;
+      height: 430px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      padding: 3px;
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s;
+    }
+
+    .image-border-glow:hover {
+      transform: translateY(-10px) rotateY(5deg) rotateX(5deg);
+      box-shadow: 0 30px 60px rgba(99, 102, 241, 0.4);
+    }
+
+    .image-border-glow::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 24px;
+      z-index: -1;
+      opacity: 0.3;
+      filter: blur(15px);
+      transition: opacity 0.5s;
+    }
+
+    .image-border-glow:hover::before {
+      opacity: 0.6;
+    }
+
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 17px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, rgba(9, 13, 22, 0.95) 100%);
+    }
+
+    /* Galerie photos d'espace de travail */
+    .gallery-container {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .gallery-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.8rem;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 15px 30px rgba(99, 102, 241, 0.15);
+    }
+
+    .gallery-img-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      height: 320px;
+      position: relative;
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s, filter 0.6s;
+    }
+
+    .gallery-card:hover .gallery-img {
+      transform: scale(1.08);
+    }
+
+    .gallery-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(9, 13, 22, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    .gallery-caption {
+      margin-top: 1rem;
+      padding: 0 0.5rem 0.5rem;
+      text-align: center;
+    }
+
+    .gallery-caption h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .gallery-caption p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Sections */
+    section.content-section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 3rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 50px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+
+    /* Compétences */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      transition: all 0.3s;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.05);
+    }
+
+    .skill-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .skill-tag {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .skill-tag:hover {
+      background-color: rgba(59, 130, 246, 0.1);
+      border-color: var(--primary);
+      color: var(--text);
+    }
+
+    .notions-tag {
+      background-color: rgba(99, 102, 241, 0.05) !important;
+      border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    }
+
+    /* Projets */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: all 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.1);
+    }
+
+    .project-img-wrapper {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .project-card:hover .project-img {
+      transform: scale(1.06);
+    }
+
+    .project-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-tag {
+      background-color: rgba(99, 102, 241, 0.1);
+      color: var(--accent);
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .project-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .project-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .project-bullets {
+      list-style-type: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-bullets li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .project-bullets li::before {
+      content: "•";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: auto;
+    }
+
+    .project-link {
+      font-size: 0.9rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.3s;
+    }
+
+    .project-link:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    /* Parcours & Formations */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background: var(--border);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -1px;
+    }
+
+    .timeline-item {
+      padding: 10px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      right: -8px;
+      background-color: var(--bg);
+      border: 4px solid var(--primary);
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+      transition: all 0.3s;
+    }
+
+    .timeline-item:hover::after {
+      background-color: var(--accent);
+      border-color: #fff;
+      transform: scale(1.2);
+    }
+
+    .left {
+      left: 0;
+    }
+
+    .right {
+      left: 50%;
+    }
+
+    .right::after {
+      left: -8px;
+    }
+
+    .timeline-content {
+      padding: 1.5rem;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      position: relative;
+      border-radius: 12px;
+    }
+
+    .timeline-content h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      color: #fff;
+    }
+
+    .timeline-org {
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-date {
+      display: inline-block;
+      font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Certifications & Langues */
+    .extra-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+    }
+
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .cert-item {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .cert-item:hover {
+      border-color: var(--primary);
+    }
+
+    .cert-info h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .cert-org {
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .cert-id {
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .cert-badge {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .lang-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .lang-item {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lang-name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .lang-level {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Galerie photos d'espace de travail */
+    .gallery-container {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .gallery-img-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      height: 240px;
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .gallery-img-wrapper:hover .gallery-img {
+      transform: scale(1.05);
+    }
+
+    /* Contact & Footer */
+    footer {
+      background-color: #05070c;
+      border-top: 1px solid var(--border);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-about h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .footer-about p {
+      color: var(--text-muted);
+      max-width: 450px;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item-footer {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .contact-item-footer:hover {
+      color: #fff;
+    }
+
+    .contact-icon-footer {
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .footer-links h4 {
+      font-family: 'Outfit', sans-serif;
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      list-style: none;
+    }
+
+    .footer-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-nav a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .hero-content p {
+        margin: 0 auto 2rem;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-image-container {
+        order: -1;
+      }
+
+      .timeline::after {
+        left: 31px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+
+      .timeline-item::after {
+        left: 23px;
+      }
+
+      .right {
+        left: 0%;
+      }
+
+      .extra-grid, .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .gallery-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background neon glows -->
+  <div class="bg-glow"></div>
+  <div class="bg-glow-2"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="logo">Gylex Nathan</a>
+      <ul class="nav-links">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#projects">Projets</a></li>
+        <li><a href="#timeline">Parcours</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <h2>Ingénieur Logiciel &amp; IA</h2>
+        <h1>Pieplie Saffou<br>Gylex Nathan</h1>
+        <p>
+          Développeur Backend et IA, passionné par la conception d'API robustes sous Java (Spring Boot) et Python, ainsi que par l'intégration créative de services d'intelligence artificielle.
+        </p>
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">Voir mes projets</a>
+          <a href="#contact" class="btn btn-secondary">Me contacter</a>
+        </div>
+      </div>
+      <div class="hero-image-container">
+        <div class="image-border-glow">
+          <img src="assets/main-photo.jpg" alt="Pieplie Saffou Gylex Nathan" class="profile-img">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Section À Propos -->
+  <section id="about" class="content-section">
+    <h2 class="section-title">À propos de moi</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 1rem;">
+      <div>
+        <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem; text-align: justify;">
+          Titulaire d'une <strong>Licence en Informatique</strong> et actuellement étudiant en <strong>Master 1 Intelligence Artificielle</strong> à l'Université de Dschang, je combine de solides bases d'ingénierie backend avec les dernières avancées des modèles d'apprentissage automatique (ML/LLM).
+        </p>
+        <p style="font-size: 1.1rem; color: var(--text-muted); text-align: justify;">
+          Mon objectif est de créer des architectures d'applications fluides et hautement sécurisées, tout en y injectant une intelligence applicative fine et utile. Bien que spécialisé en backend, je possède également des connaissances sur le cloud, les architectures distribuées et le développement d'applications mobiles cross-platform.
+        </p>
+      </div>
+      <div>
+        <div class="gallery-container">
+          
+          <!-- Carte Photo 1 : Bureau 2 ordinateurs -->
+          <div class="gallery-card">
+            <div class="gallery-img-wrapper">
+              <span class="gallery-badge">Workspace &amp; Code</span>
+              <img src="assets/workspace1.jpg" alt="Gylex Nathan au bureau avec deux ordinateurs" class="gallery-img">
+            </div>
+            <div class="gallery-caption">
+              <h4>Conception Logicielle</h4>
+              <p>Architecture Backend &amp; IA</p>
+            </div>
+          </div>
+
+          <!-- Carte Photo 2 : Bureau focus -->
+          <div class="gallery-card">
+            <div class="gallery-img-wrapper">
+              <span class="gallery-badge">Workspace &amp; Focus</span>
+              <img src="assets/workspace2.jpg" alt="Gylex Nathan en session de travail" class="gallery-img">
+            </div>
+            <div class="gallery-caption">
+              <h4>Session de R&amp;D</h4>
+              <p>Intégration d'IA &amp; Machine Learning</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Compétences -->
+  <section id="skills" class="content-section">
+    <h2 class="section-title">Compétences Techniques</h2>
+    <div class="skills-grid">
+      
+      <!-- Backend & API -->
+      <div class="skill-card">
+        <h3>Backend &amp; API</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Java (JEE)</span>
+          <span class="skill-tag">Spring Boot</span>
+          <span class="skill-tag">Spring Security</span>
+          <span class="skill-tag">FastAPI (Python)</span>
+          <span class="skill-tag">Django</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Clean Code</span>
+        </div>
+      </div>
+
+      <!-- IA & Machine Learning -->
+      <div class="skill-card">
+        <h3>IA &amp; Machine Learning</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Deep Learning</span>
+          <span class="skill-tag">Scikit-Learn</span>
+          <span class="skill-tag">Pandas / NumPy</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">APIs LLM (Mistral/OpenAI)</span>
+        </div>
+      </div>
+
+      <!-- Bases de données & Cloud -->
+      <div class="skill-card">
+        <h3>Bases de données &amp; Notions Cloud</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">JPA / Hibernate</span>
+          <span class="skill-tag notions-tag">Notions : Cloud (AWS/GCP)</span>
+          <span class="skill-tag notions-tag">Notions : Systèmes Distribués</span>
+        </div>
+      </div>
+
+      <!-- DevOps & Automatisation -->
+      <div class="skill-card">
+        <h3>DevOps &amp; Outils</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Docker Compose</span>
+          <span class="skill-tag">Jenkins</span>
+          <span class="skill-tag">CI/CD Pipelines</span>
+          <span class="skill-tag">Git / GitHub Flow</span>
+          <span class="skill-tag">Taskfile Automation</span>
+          <span class="skill-tag">Maven</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section Projets -->
+  <section id="projects" class="content-section">
+    <h2 class="section-title">Projets Récents</h2>
+    <div class="projects-grid">
+      
+      <!-- HACKATHONS-HUB -->
+      <div class="project-card">
+        <div class="project-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Hackathons Hub" class="project-img">
+        </div>
+        <div class="project-content">
+          <div class="project-header">
+            <span class="project-tag">SaaS / Microservices</span>
+            <span class="project-date">03/2025 - 07/2025</span>
+          </div>
+          <h3>HACKATHONS-HUB</h3>
+          <p class="project-desc">Plateforme SaaS de gestion d'événements de Hackathons développée dans le cadre d'un projet pour l'Université de Dschang.</p>
+          <ul class="project-bullets">
+            <li>Architecture découplée (Utilisateurs, Projets, Équipes, Évaluations)</li>
+            <li>API REST sécurisées avec Spring Boot &amp; Spring Security (RBAC)</li>
+            <li>Persistance relationnelle PostgreSQL optimisée via JPA</li>
+            <li>Environnement normalisé via Taskfile (YAML)</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/GylexNatthan/HACKATHON_HUB" target="_blank" class="project-link">🔗 Voir le Dépôt GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERGICIEL -->
+      <div class="project-card">
+        <div class="project-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" alt="Intergiciel Backend" class="project-img">
+        </div>
+        <div class="project-content">
+          <div class="project-header">
+            <span class="project-tag">Microservices &amp; IA</span>
+            <span class="project-date">R&amp;D Académique</span>
+          </div>
+          <h3>INTERGICIEL-BACKEND</h3>
+          <p class="project-desc">Un écosystème de plus de 15 microservices autonomes d'application sociale de dating combinant messagerie fluide et IA.</p>
+          <ul class="project-bullets">
+            <li>Passerelle API centrale sous Spring Cloud API Gateway avec JWT</li>
+            <li>Moteur d'IA (ai-service) sous FastAPI (Python) connecté à Mistral AI</li>
+            <li>Persistance hybride : PostgreSQL transactionnel + MongoDB (messagerie)</li>
+            <li>Pipeline d'intégration continue via Jenkins (Jenkinsfile)</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/NANFACK-STALLONE/intergicel-backend" target="_blank" class="project-link">🔗 Backend</a>
+            <a href="https://github.com/NANFACK-STALLONE/intergiciel" target="_blank" class="project-link">🔗 Global</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- UV-PROJET -->
+      <div class="project-card">
+        <div class="project-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=600&q=80" alt="UV-Projet Mobile" class="project-img">
+        </div>
+        <div class="project-content">
+          <div class="project-header">
+            <span class="project-tag">Application Mobile</span>
+            <span class="project-date">Projet Mobile</span>
+          </div>
+          <h3>UV-PROJET (Mobile)</h3>
+          <p class="project-desc">Application mobile cross-platform avec flux d'authentification avancés et module d'IA Goal Planner intégré.</p>
+          <ul class="project-bullets">
+            <li>Interface responsive Flutter &amp; Dart (Android / iOS / Web)</li>
+            <li>Structure robuste respectant les principes de la "Clean Architecture"</li>
+            <li>Gestion d'état réactive avancée (Riverpod)</li>
+            <li>Intégration d'un planificateur d'objectifs assisté par l'IA</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/NANFACK-STALLONE/APP-UV-PROJET" target="_blank" class="project-link">🔗 Voir le Dépôt GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKLAND -->
+      <div class="project-card">
+        <div class="project-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Workland CM" class="project-img">
+        </div>
+        <div class="project-content">
+          <div class="project-header">
+            <span class="project-tag">Plateforme Web</span>
+            <span class="project-date">Projet R&amp;D</span>
+          </div>
+          <h3>WORKLAND.CM</h3>
+          <p class="project-desc">Plateforme professionnelle offline-first pensée pour les zones à connectivité réseau limitée.</p>
+          <ul class="project-bullets">
+            <li>Stratégie "Offline-First" avec bases de données locales répliquées</li>
+            <li>Génération de documentation technique via MkDocs</li>
+            <li>Automatisation de l'onboarding technique et de l'environnement via Taskfile</li>
+          </ul>
+          <div class="project-links">
+            <a href="https://github.com/GylexNatthan/workland.cm" target="_blank" class="project-link">🔗 Voir le Dépôt GitHub</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section Parcours (Timeline) -->
+  <section id="timeline" class="content-section">
+    <h2 class="section-title">Mon Parcours Académique</h2>
+    <div class="timeline">
+      
+      <!-- M1 IA -->
+      <div class="timeline-item left">
+        <div class="timeline-content">
+          <span class="timeline-date">11/2025 - Présent</span>
+          <h3>Master 1 Intelligence Artificielle</h3>
+          <div class="timeline-org">Université de Dschang</div>
+          <p class="timeline-desc">Spécialisation dans les architectures de modèles intelligents (Machine Learning, Deep Learning, traitement de données en Python avec Scikit-Learn/Pandas) et notions en systèmes distribués.</p>
+        </div>
+      </div>
+
+      <!-- Licence -->
+      <div class="timeline-item right">
+        <div class="timeline-content">
+          <span class="timeline-date">10/2022 - 07/2025</span>
+          <h3>Licence en Informatique</h3>
+          <div class="timeline-org">Université de Dschang</div>
+          <p class="timeline-desc">Acquisition de solides bases en algorithmique, programmation orientée objet (Java, C++), bases de données relationnelles et architectures logicielles.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Certifications & Langues -->
+  <section id="certifications" class="content-section">
+    <div class="extra-grid">
+      
+      <!-- Certifications -->
+      <div>
+        <h2 class="section-title">Certifications Cisco</h2>
+        <div class="cert-list">
+          
+          <div class="cert-item">
+            <div class="cert-info">
+              <h4>Introduction to Modern AI</h4>
+              <div class="cert-org">Cisco Networking Academy</div>
+              <div class="cert-id">ID : 57332bd9-fe37-4d6a-96fc-e4317463d1f6</div>
+            </div>
+            <span class="cert-badge">Vérifiée</span>
+          </div>
+
+          <div class="cert-item">
+            <div class="cert-info">
+              <h4>Apply AI: Analyze Customer Reviews</h4>
+              <div class="cert-org">Cisco Networking Academy</div>
+              <div class="cert-id">ID : a1d19ee4-04eb-4f77-bd3b-a59e527830b4</div>
+            </div>
+            <span class="cert-badge">Vérifiée</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Langues -->
+      <div>
+        <h2 class="section-title">Langues</h2>
+        <div class="lang-list">
+          <div class="lang-item">
+            <span class="lang-name">Français</span>
+            <span class="lang-level">Langue maternelle (C2)</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">Anglais</span>
+            <span class="lang-level">Professionnel avancé</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer / Contact -->
+  <footer id="contact">
+    <div class="footer-container">
+      <div class="footer-about">
+        <h3>Construisons quelque chose ensemble</h3>
+        <p>N'hésitez pas à me contacter pour toute proposition de stage, d'alternance ou de collaboration sur des projets backend ou IA.</p>
+        <div class="contact-info">
+          <a href="mailto:gylexnathan@gmail.com" class="contact-item-footer">
+            <span class="contact-icon-footer">✉</span> gylexnathan@gmail.com
+          </a>
+          <a href="tel:+237652983259" class="contact-item-footer">
+            <span class="contact-icon-footer">☏</span> +237 652 983 259
+          </a>
+          <div class="contact-item-footer">
+            <span class="contact-icon-footer">📍</span> Dschang, Cameroun
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4>Navigation rapide</h4>
+        <ul class="footer-nav">
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#skills">Compétences</a></li>
+          <li><a href="#projects">Projets</a></li>
+          <li><a href="#timeline">Parcours</a></li>
+          <li><a href="#certifications">Certifications</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Pieplie Saffou Gylex Nathan. Tous droits réservés.</p>
+      <a href="https://github.com/GylexNatthan" target="_blank" style="color: var(--text-muted); text-decoration: none;">GitHub</a>
+    </div>
+  </footer>
+
+</body>
+</html>
